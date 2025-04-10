@@ -1,68 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>RadioMega - Ao Vivo</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #111;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        header {
-            background: #222;
-            padding: 20px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #f00;
-        }
-
-        .player-container {
-            margin-top: 50px;
-        }
-
-        audio {
-            width: 80%;
-            max-width: 400px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #222;
-            padding: 10px;
-            font-size: 0.9em;
-            color: #aaa;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Rádio Mega</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #111;
+      color: #fff;
+      padding: 50px;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    audio {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 400px;
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>RadioMega</h1>
-        <p>Você está ouvindo a melhor rádio online!</p>
-    </header>
-
-    <div class="player-container">
-        <h2>Ao Vivo</h2>
-        <!-- Substitua o link abaixo pelo da sua rádio -->
-        <audio controls autoplay>
-            <source src="http://stm18.xcast.com.br:10326/;" type="audio/mpeg">
-            Seu navegador não suporta o player de áudio.
-        </audio>
-    </div>
-
-    <footer>
-        © 2025 RadioMega - Todos os direitos reservados.
-    </footer>
-
+  <h1>📻 Rádio Mega - Ao Vivo</h1>
+  <p>Clique no play para ouvir a transmissão:</p>
+  <audio controls autoplay>
+    <source src="http://stm18.xcast.com.br:10326/;" type="audio/mpeg">
+    Seu navegador não suporta o player de áudio.
+  </audio>
 </body>
 </html>
