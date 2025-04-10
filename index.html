@@ -1,116 +1,69 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rádio Mega</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <style>
-        /* Estilos básicos */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .player {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .content {
-            padding: 20px;
-        }
-        .programs {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-        .program {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 30%;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
-
-<header>
-    <h1>Rádio Mega</h1>
-    <p>Sua Rádio Brasileira na Irlanda!</p>
-</header>
-
-<!-- Player de Rádio -->
-<div class="player">
-    <h2>📻 Ouça ao Vivo</h2>
-    <audio controls>
-        <source src="http://stm18.xcast.com.br:10326/;" type="audio/mp3">
-        Seu navegador não suporta o player de áudio.
-    </audio>
-</div>
-
-<!-- Programas e Notícias -->
-<div class="content">
-    <h2>Programas</h2>
-    <div class="programs">
-        <div class="program">
-            <h3>Programa 1</h3>
-            <p>Descrição do programa 1.</p>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Rádio Mega">
         </div>
-        <div class="program">
-            <h3>Programa 2</h3>
-            <p>Descrição do programa 2.</p>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Programação</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Seção Principal -->
+    <section class="main">
+        <div class="banner">
+            <h1>Ouça Agora a Rádio Mega!</h1>
+            <button onclick="playRadio()">Play</button>
         </div>
-        <div class="program">
-            <h3>Programa 3</h3>
-            <p>Descrição do programa 3.</p>
+        <div class="player">
+            <h2>Agora Tocando:</h2>
+            <div class="track-info">
+                <p id="track-name">Nome da música</p>
+                <button id="play-pause-btn" onclick="togglePlayPause()">Play</button>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <h2>Últimas Notícias</h2>
-    <ul>
-        <li><a href="#">Notícia 1</a></li>
-        <li><a href="#">Notícia 2</a></li>
-        <li><a href="#">Notícia 3</a></li>
-    </ul>
-</div>
+    <!-- Seção Sobre -->
+    <section class="about">
+        <h2>Sobre a Rádio Mega</h2>
+        <p>Somos uma rádio dedicada a oferecer a melhor seleção de músicas, 24 horas por dia, para você!</p>
+    </section>
 
-<!-- Contato -->
-<div class="content">
-    <h2>Entre em Contato</h2>
-    <form action="#">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="message">Mensagem:</label><br>
-        <textarea id="message" name="message" rows="4" required></textarea><br><br>
-        <input type="submit" value="Enviar">
-    </form>
-</div>
+    <!-- Seção de Contato -->
+    <section class="contact">
+        <h2>Entre em Contato</h2>
+        <form>
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu e-mail" required>
+            <textarea placeholder="Sua mensagem" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
 
-<!-- Rodapé -->
-<footer>
-    <p>&copy; 2025 Rádio Mega - Todos os direitos reservados</p>
-</footer>
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Rádio Mega | Todos os direitos reservados.</p>
+        <div class="social-icons">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
