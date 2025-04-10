@@ -3,7 +3,7 @@ const playPauseBtn = document.getElementById('play-pause-btn');
 
 function playRadio() {
     // Adicionar a URL do stream aqui
-    const audio = new Audio('url_do_stream_aqui');
+    const audio = new Audio('http://stm18.xcast.com.br:10326/');
     audio.play();
     isPlaying = true;
     playPauseBtn.innerHTML = 'Pause';
