@@ -2,69 +2,352 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Rádio Mega</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rádio Mega - Brasil na Irlanda</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #111;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1e1e1e;
+      color: #e5e5e5;
+      overflow-x: hidden;
+    }
+
+    /* Barra lateral */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -250px; /* Inicialmente escondida */
+      background: linear-gradient(180deg, #007f4f, #005d33);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 60px 20px;
+      box-shadow: 2px 0 15px rgba(0, 128, 50, 0.1);
+      transition: left 0.3s ease-in-out;
+      overflow-y: auto; /* Habilita rolagem */
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar h2 {
       color: #fff;
-      padding: 50px;
+      font-size: 24px;
+      margin-bottom: 40px;
+      text-align: left;
     }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      color: #e5e5e5;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(0, 128, 50, 0.2);
+      color: #fff;
+    }
+
+    .menu-item span {
+      margin-left: 10px;
+    }
+
+    /* Botão de Menu */
+    .menu-toggle {
+      font-size: 20px;
+      color: #fff;
+      background-color: #00c851;
+      padding: 12px 20px;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      border-radius: 8px;
+      z-index: 10;
+      box-shadow: 0 0 15px rgba(0, 128, 50, 0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background-color: #007f4f;
+    }
+
+    /* Conteúdo principal */
+    .conteudo {
+      transition: margin-left 0.3s ease;
+      padding: 80px 30px 30px;
+      text-align: center;
+    }
+
     h1 {
-      color: #00ffcc;
+      color: #00c851;
+      font-size: 2.8em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
     }
+
+    p {
+      font-size: 18px;
+      color: #b0b0b0;
+    }
+
     audio {
       margin-top: 30px;
       width: 100%;
-      max-width: 400px;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 128, 50, 0.2);
     }
-    .pedido-musica {
-      margin-top: 40px;
+
+    /* Programação */
+    .programacao-lateral {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #2a2a2a;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 128, 50, 0.3);
+      display: none; /* Inicialmente escondido */
     }
-    .pedido-musica h2 {
-      color: #00ffcc;
-      margin-bottom: 10px;
-    }
-    .pedido-musica a {
-      color: #00ffcc;
-      font-size: 18px;
-      text-decoration: none;
-      border: 1px solid #00ffcc;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: inline-block;
+
+    .programacao-lateral h2 {
+      color: #00c851;
+      font-size: 1.8em;
       margin-bottom: 20px;
     }
-    .pedido-musica a:hover {
-      background-color: #00ffcc;
-      color: #111;
+
+    .programacao-lateral table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .programacao-lateral th, .programacao-lateral td {
+      padding: 15px 20px;
+      text-align: left;
+      color: #fff;
+      border-bottom: 1px solid #00c851;
+    }
+
+    .programacao-lateral th {
+      background-color: #00c85144;
+      font-weight: bold;
+    }
+
+    .programacao-lateral tr:hover {
+      background-color: rgba(0, 128, 50, 0.1);
+    }
+
+    /* Rodapé com botões de redes sociais */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #1e1e1e;
+    }
+
+    .footer a {
+      margin: 0 20px;
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      background-color: #00c851;
+      transition: background-color 0.3s ease;
+    }
+
+    .footer a:hover {
+      background-color: #007f4f;
+    }
+
+    /* Seção Redes Sociais */
+    .redes-sociais-title {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .redes-sociais-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      color: #e5e5e5;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .redes-sociais-item:hover {
+      background-color: rgba(0, 128, 50, 0.2);
+      color: #fff;
+    }
+
+    /* Seção Fale Conosco */
+    .fale-conosco-title {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .fale-conosco-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      color: #e5e5e5;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .fale-conosco-item:hover {
+      background-color: rgba(0, 128, 50, 0.2);
+      color: #fff;
+    }
+
+    /* Responsividade para dispositivos móveis */
+    @media (max-width: 768px) {
+      .conteudo {
+        padding: 20px;
+      }
+
+      .programacao-lateral {
+        margin-top: 20px;
+      }
     }
   </style>
-  <script type="text/javascript">
-    function abrir_pedido(url, largura, altura) {
+  <script>
+    // Função para abrir e fechar a barra lateral
+    function toggleSidebar() {
+      var sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+      var conteudo = document.querySelector('.conteudo');
+      
+      // Ajusta a margem do conteúdo dependendo da barra lateral estar aberta ou fechada
+      if (sidebar.classList.contains('open')) {
+        conteudo.style.marginLeft = '250px';
+      } else {
+        conteudo.style.marginLeft = '0';
+      }
+    }
+
+    // Função para mostrar/esconder a programação
+    function toggleProgramacao() {
+      var programacao = document.querySelector('.programacao-lateral');
+      programacao.style.display = (programacao.style.display === 'none' || programacao.style.display === '') ? 'block' : 'none';
+    }
+
+    // Função para abrir o chat
+    function abrir_chat(url, largura, altura) {
       window.open(url, "", "width=" + largura + ",height=" + altura + ",toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=NO");
     }
   </script>
 </head>
 <body>
-  <h1>📻 Rádio Mega - Ao Vivo</h1>
-  <p>Clique no play para ouvir a transmissão:</p>
-  <audio controls autoplay>
-    <source src="http://stm18.xcast.com.br:10326/;" type="audio/mpeg">
-    Seu navegador não suporta o player de áudio.
-  </audio>
 
-  <div class="pedido-musica">
-    <h2>🎧 Pedir Música (AutoDJ)</h2>
-    <p>Use essa opção quando a rádio estiver no modo automático.</p>
-    <a href="javascript:abrir_pedido('https://player.xcast.com.br/pedir-musica/10326','505','180');">🎵 Pedir Música Automático</a>
+  <!-- Botão de menu para abrir e fechar a barra lateral -->
+  <span class="menu-toggle" onclick="toggleSidebar()">Menu</span>
+
+  <!-- Barra lateral -->
+  <div class="sidebar">
+    <h2>🌍 Rádio Mega</h2>
+    <a class="menu-item" href="#player">▶️ <span>Ouvir Rádio</span></a>
+    <a class="menu-item" href="javascript:abrir_pedido('https://player.xcast.com.br/pedir-musica/10326','505','180');">🎵 <span>Pedir Música</span></a>
+    <a class="menu-item" href="javascript:abrir_chat('https://player.xcast.com.br/chat/10326','750','465');">💬 <span>Chat ao Vivo</span></a>
+    <a class="menu-item" href="javascript:toggleProgramacao()">📅 <span>Programação</span></a>
+    <a class="menu-item" href="#novidades">🆕 <span>Novidades</span></a>
+
+    <!-- Redes Sociais -->
+    <div class="redes-sociais-title">🌐 Redes Sociais</div>
+    <a class="redes-sociais-item" href="https://www.instagram.com" target="_blank">Instagram</a>
+    <a class="redes-sociais-item" href="https://web.telegram.org" target="_blank">Telegram</a>
+
+    <!-- Fale Conosco -->
+    <div class="fale-conosco-title">💬 Fale Conosco</div>
+    <a class="fale-conosco-item" href="https://web.whatsapp.com" target="_blank">Whatsapp</a>
+    <a class="fale-conosco-item" href="mailto:contato@radiomega.com" target="_blank">E-mail</a>
   </div>
 
-  <div class="pedido-musica">
-    <h2>🎙️ Pedir Música (Ao Vivo)</h2>
-    <p>Use essa opção quando estivermos ao vivo com locutor.</p>
-    <a href="javascript:abrir_pedido('https://player.xcast.com.br/pedido/10326','505','180');">🎵 Pedir Música Manual</a>
+  <!-- Conteúdo principal -->
+  <div class="conteudo" id="player">
+    <h1>📻 Rádio Mega - Ao Vivo</h1>
+    <p>Diretamente da Irlanda para os brasileiros no mundo! 🇧🇷🇮🇪</p>
+    <audio controls autoplay>
+      <source src="http://stm18.xcast.com.br:10326/;" type="audio/mpeg">
+      Seu navegador não suporta o player de áudio.
+    </audio>
   </div>
+
+  <!-- Programação da Semana -->
+  <div class="programacao-lateral">
+    <h2>📅 Programação da Semana</h2>
+    <table>
+      <tr>
+        <th>Dia</th>
+        <th>Horário</th>
+        <th>Programa</th>
+      </tr>
+      <tr>
+        <td>Segunda</td>
+        <td>18h - 20h</td>
+        <td>Top Hits Brasil</td>
+      </tr>
+      <tr>
+        <td>Terça</td>
+        <td>19h - 21h</td>
+        <td>Fala Brasil</td>
+      </tr>
+      <tr>
+        <td>Quarta</td>
+        <td>19h - 21h</td>
+        <td>Fala Comunidade</td>
+      </tr>
+      <tr>
+        <td>Quinta</td>
+        <td>20h - 22h</td>
+        <td>Brasil Mix</td>
+      </tr>
+      <tr>
+        <td>Sexta</td>
+        <td>20h - 22h</td>
+        <td>Noite Brasileira</td>
+      </tr>
+      <tr>
+        <td>Sábado</td>
+        <td>15h - 17h</td>
+        <td>Som do Brasil</td>
+      </tr>
+      <tr>
+        <td>Domingo</td>
+        <td>18h - 20h</td>
+        <td>Relax Brasil</td>
+      </tr>
+    </table>
+  </div>
+
 </body>
 </html>
