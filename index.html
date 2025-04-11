@@ -1,353 +1,264 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rádio Mega - Brasil na Irlanda</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1e1e1e;
-      color: #e5e5e5;
-      overflow-x: hidden;
-    }
-
-    /* Barra lateral */
-    .sidebar {
-      height: 100vh;
-      width: 250px;
-      position: fixed;
-      top: 0;
-      left: -250px; /* Inicialmente escondida */
-      background: linear-gradient(180deg, #007f4f, #005d33);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 60px 20px;
-      box-shadow: 2px 0 15px rgba(0, 128, 50, 0.1);
-      transition: left 0.3s ease-in-out;
-      overflow-y: auto; /* Habilita rolagem */
-    }
-
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar h2 {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #121212;
       color: #fff;
-      font-size: 24px;
-      margin-bottom: 40px;
-      text-align: left;
     }
 
-    .menu-item {
+    /* TOPO */
+    header {
+      background-color: #00c851;
       display: flex;
       align-items: center;
-      width: 100%;
-      padding: 12px 20px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      color: #e5e5e5;
+      justify-content: space-between;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 30px;
       text-decoration: none;
-      font-size: 16px;
-      transition: all 0.3s ease;
+      font-weight: bold;
     }
 
-    .menu-item:hover {
-      background-color: rgba(0, 128, 50, 0.2);
-      color: #fff;
+    nav a:hover {
+      text-decoration: underline;
     }
 
-    .menu-item span {
-      margin-left: 10px;
-    }
-
-    /* Botão de Menu */
-    .menu-toggle {
-      font-size: 20px;
-      color: #fff;
-      background-color: #00c851;
-      padding: 12px 20px;
-      cursor: pointer;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      border-radius: 8px;
-      z-index: 10;
-      box-shadow: 0 0 15px rgba(0, 128, 50, 0.3);
-      transition: background-color 0.3s ease;
-    }
-
-    .menu-toggle:hover {
-      background-color: #007f4f;
-    }
-
-    /* Conteúdo principal */
-    .conteudo {
-      transition: margin-left 0.3s ease;
-      padding: 80px 30px 30px;
+    /* BANNER */
+    .banner {
+      background: url('banner.jpg') center/cover no-repeat;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 20px;
     }
 
-    h1 {
-      color: #00c851;
-      font-size: 2.8em;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    p {
-      font-size: 18px;
-      color: #b0b0b0;
-    }
-
-    audio {
-      margin-top: 30px;
-      width: 100%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 128, 50, 0.2);
-    }
-
-    /* Programação */
-    .programacao-lateral {
-      margin-top: 30px;
-      width: 100%;
-      background-color: #2a2a2a;
-      padding: 25px;
+    .banner h1 {
+      font-size: 3em;
+      background-color: rgba(0,0,0,0.6);
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 128, 50, 0.3);
-      display: none; /* Inicialmente escondido */
     }
 
-    .programacao-lateral h2 {
+    /* PLAYER */
+    .player-section {
+      padding: 60px 30px;
+      text-align: center;
+      background-color: #1e1e1e;
+    }
+
+    .player-section h2 {
       color: #00c851;
-      font-size: 1.8em;
+      font-size: 2em;
       margin-bottom: 20px;
     }
 
-    .programacao-lateral table {
+    audio {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    .programacao-lateral th, .programacao-lateral td {
-      padding: 15px 20px;
-      text-align: left;
-      color: #fff;
-      border-bottom: 1px solid #00c851;
-    }
-
-    .programacao-lateral th {
-      background-color: #00c85144;
-      font-weight: bold;
-    }
-
-    .programacao-lateral tr:hover {
-      background-color: rgba(0, 128, 50, 0.1);
-    }
-
-    /* Rodapé com botões de redes sociais */
-    .footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background-color: #1e1e1e;
-    }
-
-    .footer a {
-      margin: 0 20px;
-      color: #fff;
-      font-size: 18px;
-      text-decoration: none;
-      padding: 12px 24px;
+      max-width: 600px;
       border-radius: 10px;
+    }
+
+    /* NOTÍCIAS / EVENTOS */
+    .cards-section {
+      padding: 60px 30px;
+      background-color: #141414;
+    }
+
+    .cards-section h2 {
+      text-align: center;
+      color: #00c851;
+      font-size: 2em;
+      margin-bottom: 40px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background-color: #1f1f1f;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 128, 80, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h3 {
+      color: #00c851;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #ccc;
+    }
+
+    /* RODAPÉ */
+    footer {
       background-color: #00c851;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* BANNER CENTRAL CUSTOMIZADO */
+    .custom-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #111;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 30px auto;
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(0, 200, 81, 0.4);
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .custom-banner h1 {
+      color: white;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .custom-banner h1 span {
+      color: #00c851;
+    }
+
+    .custom-banner p {
+      color: #ccc;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    /* BOTÃO FIXO INFERIOR ESQUERDO - CHAT */
+    .fixed-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #00c851;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 200, 81, 0.4);
       transition: background-color 0.3s ease;
-    }
-
-    .footer a:hover {
-      background-color: #007f4f;
-    }
-
-    /* Seção Redes Sociais */
-    .redes-sociais-title {
-      margin-top: 30px;
-      font-size: 1.5em;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .redes-sociais-item {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 10px 20px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      color: #e5e5e5;
+      z-index: 999;
       text-decoration: none;
-      font-size: 16px;
-      transition: all 0.3s ease;
     }
 
-    .redes-sociais-item:hover {
-      background-color: rgba(0, 128, 50, 0.2);
-      color: #fff;
-    }
-
-    /* Seção Fale Conosco */
-    .fale-conosco-title {
-      margin-top: 30px;
-      font-size: 1.5em;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .fale-conosco-item {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 10px 20px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      color: #e5e5e5;
-      text-decoration: none;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .fale-conosco-item:hover {
-      background-color: rgba(0, 128, 50, 0.2);
-      color: #fff;
-    }
-
-    /* Responsividade para dispositivos móveis */
-    @media (max-width: 768px) {
-      .conteudo {
-        padding: 20px;
-      }
-
-      .programacao-lateral {
-        margin-top: 20px;
-      }
+    .fixed-button:hover {
+      background-color: #009e40;
     }
   </style>
-  <script>
-    // Função para abrir e fechar a barra lateral
-    function toggleSidebar() {
-      var sidebar = document.querySelector('.sidebar');
-      sidebar.classList.toggle('open');
-      var conteudo = document.querySelector('.conteudo');
-      
-      // Ajusta a margem do conteúdo dependendo da barra lateral estar aberta ou fechada
-      if (sidebar.classList.contains('open')) {
-        conteudo.style.marginLeft = '250px';
-      } else {
-        conteudo.style.marginLeft = '0';
-      }
-    }
 
-    // Função para mostrar/esconder a programação
-    function toggleProgramacao() {
-      var programacao = document.querySelector('.programacao-lateral');
-      programacao.style.display = (programacao.style.display === 'none' || programacao.style.display === '') ? 'block' : 'none';
-    }
-
-    // Função para abrir o chat
+  <script type="text/javascript">
     function abrir_chat(url, largura, altura) {
-      window.open(url, "", "width=" + largura + ",height=" + altura + ",toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=NO");
+      window.open(
+        url,
+        "",
+        "width=" + largura + ",height=" + altura + ",toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=no"
+      );
     }
   </script>
 </head>
 <body>
 
-  <!-- Botão de menu para abrir e fechar a barra lateral -->
-  <span class="menu-toggle" onclick="toggleSidebar()">Menu</span>
+  <!-- TOPO -->
+  <header>
+    <img src="logo.png" alt="Rádio Mega" />
+    <nav>
+      <a href="#player">Ouvir</a>
+      <a href="#eventos">Eventos</a>
+      <a href="https://web.whatsapp.com" target="_blank">Whatsapp</a>
+      <a href="mailto:contato@radiomega.com">Contato</a>
+    </nav>
+  </header>
 
-  <!-- Barra lateral -->
-  <div class="sidebar">
-    <h2>🌍 Rádio Mega</h2>
-    <a class="menu-item" href="#player">▶️ <span>Ouvir Rádio</span></a>
-    <a class="menu-item" href="javascript:abrir_pedido('https://player.xcast.com.br/pedir-musica/10326','505','180');">🎵 <span>Pedir Música</span></a>
-    <a class="menu-item" href="javascript:abrir_chat('https://player.xcast.com.br/chat/10326','750','465');">💬 <span>Chat ao Vivo</span></a>
-    <a class="menu-item" href="javascript:toggleProgramacao()">📅 <span>Programação</span></a>
-    <a class="menu-item" href="#novidades">🆕 <span>Novidades</span></a>
-
-    <!-- Redes Sociais -->
-    <div class="redes-sociais-title">🌐 Redes Sociais</div>
-    <a class="redes-sociais-item" href="https://www.instagram.com" target="_blank">Instagram</a>
-    <a class="redes-sociais-item" href="https://web.telegram.org" target="_blank">Telegram</a>
-
-    <!-- Fale Conosco -->
-    <div class="fale-conosco-title">💬 Fale Conosco</div>
-    <a class="fale-conosco-item" href="https://web.whatsapp.com" target="_blank">Whatsapp</a>
-    <a class="fale-conosco-item" href="mailto:contato@radiomega.com" target="_blank">E-mail</a>
+  <!-- BANNER CUSTOMIZADO -->
+  <div class="custom-banner">
+    <h1>Rádio <span>Mega</span></h1>
+    <p>A Rádio dos Brasileiros na Irlanda</p>
   </div>
 
-  <!-- Conteúdo principal -->
-  <div class="conteudo" id="player">
-    <h1>📻 Rádio Mega - Ao Vivo</h1>
-    <p>Diretamente da Irlanda para os brasileiros no mundo! 🇧🇷🇮🇪</p>
+  <!-- PLAYER -->
+  <section id="player" class="player-section">
+    <h2>🔴 Ouça Agora ao vivo 🔴</h2>
     <audio controls autoplay>
       <source src="http://stm18.xcast.com.br:10326/;" type="audio/mpeg">
-      Seu navegador não suporta o player de áudio.
+      Seu navegador não suporta áudio.
     </audio>
-  </div>
+  </section>
 
-  <!-- Programação da Semana -->
-  <div class="programacao-lateral">
-    <h2>📅 Programação da Semana</h2>
-    <table>
-      <tr>
-        <th>Dia</th>
-        <th>Horário</th>
-        <th>Programa</th>
-      </tr>
-      <tr>
-        <td>Segunda</td>
-        <td>18h - 20h</td>
-        <td>Top Hits Brasil</td>
-      </tr>
-      <tr>
-        <td>Terça</td>
-        <td>19h - 21h</td>
-        <td>Fala Brasil</td>
-      </tr>
-      <tr>
-        <td>Quarta</td>
-        <td>19h - 21h</td>
-        <td>Fala Comunidade</td>
-      </tr>
-      <tr>
-        <td>Quinta</td>
-        <td>20h - 22h</td>
-        <td>Brasil Mix</td>
-      </tr>
-      <tr>
-        <td>Sexta</td>
-        <td>20h - 22h</td>
-        <td>Noite Brasileira</td>
-      </tr>
-      <tr>
-        <td>Sábado</td>
-        <td>15h - 17h</td>
-        <td>Som do Brasil</td>
-      </tr>
-      <tr>
-        <td>Domingo</td>
-        <td>18h - 20h</td>
-        <td>Relax Brasil</td>
-      </tr>
-    </table>
-  </div>
+  <!-- EVENTOS / NOVIDADES -->
+  <section id="eventos" class="cards-section">
+    <h2>Últimos Eventos</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Show ao Vivo</h3>
+        <p>Participe do evento em Dublin com artistas brasileiros!</p>
+      </div>
+      <div class="card">
+        <h3>Top Hits da Semana</h3>
+        <p>Veja as músicas mais pedidas da semana na Rádio Mega.</p>
+      </div>
+      <div class="card">
+        <h3>Podcast: Vida na Irlanda</h3>
+        <p>Histórias de brasileiros vivendo e trabalhando na Irlanda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>Siga a Rádio Mega:</p>
+    <a href="https://www.instagram.com" target="_blank">Instagram</a>
+    <a href="https://web.telegram.org" target="_blank">Telegram</a>
+    <p style="margin-top:15px;">© 2025 Rádio Mega - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE DE CHAT -->
+  <a href="javascript:abrir_chat('https://player.xcast.com.br/chat/10326','750','465');" class="fixed-button">💬Chat ao vivo💬 </a>
 
 </body>
 </html>
