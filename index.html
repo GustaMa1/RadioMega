@@ -190,18 +190,57 @@
     .fixed-button:hover {
       background-color: #009e40;
     }
-  </style>
 
-  <script type="text/javascript">
-    function abrir_chat(url, largura, altura) {
-      window.open(
-        url,
-        "",
-        "width=" + largura + ",height=" + altura + ",toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=no"
-      );
+    /* ESTILO PARA A CÂMERA E SOBREPOSIÇÃO */
+    .camera-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 60px;
+      justify-content: center;
     }
-  </script>
+
+    .camera-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    /* Esconde a sobreposição quando o iframe está visível */
+    .camera-overlay.hidden {
+      display: none;
+    }
+
+    iframe {
+      width: 640px;
+      height: 480px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 200, 81, 0.4);
+    }
+
+    /* Título da Câmera - Agora acima da câmera */
+    .camera-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00c851;
+      margin-bottom: 10px; /* Faz o título ficar acima da câmera */
+    }
+
+  </style>
 </head>
+
 <body>
 
   <!-- TOPO -->
@@ -229,6 +268,19 @@
       Seu navegador não suporta áudio.
     </audio>
   </section>
+
+  <!-- CÂMERA AO VIVO (iframe) -->
+  <div class="camera-container">
+    <div class="camera-title">Câmera do Estúdio</div>
+    <div class="camera-overlay hidden" id="camera-overlay">Em breve ao vivo</div>
+    <iframe 
+      src="https://player.xcast.com.br/camera-studio/10326/Y3MxLnhjYXN0LmNvbS5icisw/4:3/" 
+      scrolling="No" 
+      frameborder="0" 
+      allowfullscreen="allowfullscreen" 
+      id="camera-frame">
+    </iframe>
+  </div>
 
   <!-- EVENTOS / NOVIDADES -->
   <section id="eventos" class="cards-section">
@@ -259,6 +311,22 @@
 
   <!-- BOTÃO FLUTUANTE DE CHAT -->
   <a href="javascript:abrir_chat('https://player.xcast.com.br/chat/10326','750','465');" class="fixed-button">💬Chat ao vivo💬 </a>
+
+  <script>
+    // Função para exibir ou ocultar a sobreposição dependendo do status da transmissão
+    const iframe = document.getElementById("camera-frame");
+    const overlay = document.getElementById("camera-overlay");
+
+    // Defina se o iframe está carregado ou não, pode ser controlado via lógica do seu servidor
+    // Aqui vamos assumir que a transmissão ao vivo está disponível.
+    const isLive = true; // Alterar para 'false' quando não estiver ao vivo
+
+    if (isLive) {
+      overlay.classList.add("hidden"); // Esconde a sobreposição se estiver ao vivo
+    } else {
+      overlay.classList.remove("hidden"); // Exibe a sobreposição se não estiver ao vivo
+    }
+  </script>
 
 </body>
 </html>
